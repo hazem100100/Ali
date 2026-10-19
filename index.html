@@ -177,12 +177,12 @@
         }
 
         .product-img-wrapper {
-            height: 120px;
+            height: 110px;
             background: linear-gradient(45deg, #fff3e0, #ffeaa7);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 2.8rem;
             position: relative;
         }
 
@@ -194,10 +194,10 @@
         }
 
         .product-name {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--secondary);
-            height: 45px;
+            height: 42px;
             overflow: hidden;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -396,7 +396,7 @@
             background-color: #20ba5a;
         }
 
-        /* نافذة لوحة التحكم (Modal) */
+        /* نافذة لوحة التحكم */
         .admin-modal {
             display: none;
             position: fixed;
@@ -413,7 +413,7 @@
         .admin-content {
             background: white;
             width: 90%;
-            max-width: 800px;
+            max-width: 850px;
             max-height: 90vh;
             border-radius: 16px;
             padding: 25px;
@@ -447,7 +447,7 @@
 
         .admin-table th, .admin-table td {
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             font-size: 0.85rem;
         }
@@ -536,6 +536,7 @@
                     <button class="cat-btn" onclick="setCategory('fries', this)">🍟 بطاطس</button>
                     <button class="cat-btn" onclick="setCategory('sauces', this)">🥫 صوصات ودريسينج</button>
                     <button class="cat-btn" onclick="setCategory('cheese', this)">🧀 أجبان ومقبلات</button>
+                    <button class="cat-btn" onclick="setCategory('spices', this)">🧂 توحبوبهارات</button>
                 </div>
             </div>
 
@@ -604,6 +605,7 @@
                         <option value="fries">🍟 بطاطس</option>
                         <option value="sauces">🥫 صوصات ودريسينج</option>
                         <option value="cheese">🧀 أجبان ومقبلات</option>
+                        <option value="spices">🧂 توابل وبهارات</option>
                     </select>
                 </div>
                 <div class="form-group" style="margin:0;">
@@ -613,7 +615,7 @@
             </div>
             <button class="btn-success" onclick="addNewProduct()" style="margin-bottom: 25px;">➕ إضافة المنتج للقائمة</button>
 
-            <h3 style="margin-bottom: 10px; color: var(--secondary);">إدارة الأصناف الحالية</h3>
+            <h3 style="margin-bottom: 10px; color: var(--secondary);">إدارة جميع الأصناف (73 صنف)</h3>
             <div style="max-height: 300px; overflow-y: auto;">
                 <table class="admin-table">
                     <thead>
@@ -635,7 +637,7 @@
     <div id="toast">تمت العملية بنجاح! ✨</div>
 
     <script>
-        // المنتجات الأساسية الافتراضية
+        // جميع الـ 73 صنف المستخرجة بدقة من قائمة "الصفا للتوريدات"
         const defaultProducts = [
             { id: 1, name: "استابرس استدريس بارد", price: 130, category: "burgers", emoji: "🍗" },
             { id: 2, name: "استابرس استدريس حار", price: 135, category: "burgers", emoji: "🔥" },
@@ -645,14 +647,73 @@
             { id: 6, name: "استابرس سجق شرقي", price: 115, category: "burgers", emoji: "🌭" },
             { id: 7, name: "استابرس سلامي شرائح", price: 125, category: "burgers", emoji: "🥩" },
             { id: 8, name: "استابرس شرائح تركي", price: 130, category: "burgers", emoji: "🥪" },
-            { id: 9, name: "بطاطس فارم اوليت", price: 100, category: "fries", emoji: "🍟" },
-            { id: 10, name: "بطاطس فارم كروكل", price: 105, category: "fries", emoji: "🥔" },
-            { id: 11, name: "أصابع موزاريلا مجمدة (كيس)", price: 120, category: "cheese", emoji: "🧀" },
-            { id: 12, name: "دكسي كاتشب ظريف", price: 90, category: "sauces", emoji: "🍅" },
-            { id: 13, name: "دكسي مايونيز كلاسيك", price: 90, category: "sauces", emoji: "🥣" }
+            { id: 9, name: "استابرس كريسبي بيف", price: 140, category: "burgers", emoji: "🥩" },
+            { id: 10, name: "استابرس لحم بقري", price: 135, category: "burgers", emoji: "🥩" },
+            { id: 11, name: "استابرس موزاريلا استيكس", price: 120, category: "cheese", emoji: "🧀" },
+            { id: 12, name: "استابرس هوت دوج", price: 110, category: "burgers", emoji: "🌭" },
+            { id: 13, name: "الدار استدريس بارد", price: 130, category: "burgers", emoji: "🍗" },
+            { id: 14, name: "الدار استدريس حار", price: 135, category: "burgers", emoji: "🔥" },
+            { id: 15, name: "ايلو اكف جزيره", price: 110, category: "burgers", emoji: "📦" },
+            { id: 16, name: "ايلو تكساس برجر", price: 120, category: "burgers", emoji: "🍔" },
+            { id: 17, name: "ايلو رانكل ك", price: 100, category: "fries", emoji: "🥔" },
+            { id: 18, name: "ايلو رانش كريمه كاك", price: 90, category: "sauces", emoji: "🥣" },
+            { id: 19, name: "ايلو سويت تشيلي", price: 95, category: "sauces", emoji: "🌶️" },
+            { id: 20, name: "ايلو فاهي", price: 100, category: "burgers", emoji: "🌯" },
+            { id: 21, name: "بانيه تسمايم اك", price: 115, category: "burgers", emoji: "🍗" },
+            { id: 22, name: "بطاطس جيبومدوم فريدت", price: 95, category: "fries", emoji: "🍟" },
+            { id: 23, name: "بطاطس فارم اوليت", price: 100, category: "fries", emoji: "🍟" },
+            { id: 24, name: "بطاطس فارم دوم فريدت", price: 95, category: "fries", emoji: "🍟" },
+            { id: 25, name: "بطاطس فارم كروكل", price: 105, category: "fries", emoji: "🥔" },
+            { id: 26, name: "بطاطس فريجرز 10 ك", price: 950, category: "fries", emoji: "📦" },
+            { id: 27, name: "بطاطس فويزينا كروكل", price: 105, category: "fries", emoji: "🥔" },
+            { id: 28, name: "بطاطس ماما انافور يوم فريدت", price: 95, category: "fries", emoji: "🍟" },
+            { id: 29, name: "بطاطس ماما انافوريك كروكل", price: 105, category: "fries", emoji: "🥔" },
+            { id: 30, name: "جون داي تركي 1 ك", price: 130, category: "burgers", emoji: "🥪" },
+            { id: 31, name: "جون داي سلامي اك", price: 125, category: "burgers", emoji: "🥩" },
+            { id: 32, name: "توابل اقرا 1.5", price: 80, category: "spices", emoji: "🧂" },
+            { id: 33, name: "توابل بابريكا مدخنه", price: 90, category: "spices", emoji: "🌶️" },
+            { id: 34, name: "توابل رز كبسه", price: 85, category: "spices", emoji: "🍚" },
+            { id: 35, name: "توابل مريته شيفي", price: 90, category: "spices", emoji: "🧂" },
+            { id: 36, name: "جبنه اللذذي اك", price: 110, category: "cheese", emoji: "🧀" },
+            { id: 37, name: "جبنه جودا طبيعي اصفر", price: 140, category: "cheese", emoji: "🧀" },
+            { id: 38, name: "جبنه شيدر ميكس", price: 130, category: "cheese", emoji: "🧀" },
+            { id: 39, name: "جبنه يونفرسال اك", price: 115, category: "cheese", emoji: "🧀" },
+            { id: 40, name: "فل الهندس", price: 70, category: "sauces", emoji: "📦" },
+            { id: 41, name: "خيار فهد جبار", price: 50, category: "sauces", emoji: "🥒" },
+            { id: 42, name: "خيار فهد جبار كاك", price: 55, category: "sauces", emoji: "🥒" },
+            { id: 43, name: "دقيق التبريد 50 ك", price: 650, category: "spices", emoji: "🌾" },
+            { id: 44, name: "دکسی اسموکس فايز", price: 95, category: "sauces", emoji: "🥣" },
+            { id: 45, name: "دکسي اكف جزيره 3.4", price: 110, category: "sauces", emoji: "🥣" },
+            { id: 46, name: "دکسي باربيكو 5", price: 140, category: "sauces", emoji: "🍯" },
+            { id: 47, name: "دکسي مايو 2 ك", price: 80, category: "sauces", emoji: "🥣" },
+            { id: 48, name: "دکسي تكساس برجر", price: 95, category: "sauces", emoji: "🍔" },
+            { id: 49, name: "دکسي توابل بطاطس", price: 85, category: "spices", emoji: "🍟" },
+            { id: 50, name: "دکسي خيار 10 ك", price: 250, category: "sauces", emoji: "🥒" },
+            { id: 51, name: "دکسي دريسنج كويستو", price: 95, category: "sauces", emoji: "🥗" },
+            { id: 52, name: "دکسي دريسنج كويستو 10ك", price: 450, category: "sauces", emoji: "🥗" },
+            { id: 53, name: "دکسي رانش 3.4", price: 100, category: "sauces", emoji: "🥣" },
+            { id: 54, name: "دکسي سويت تشيلي", price: 95, category: "sauces", emoji: "🌶️" },
+            { id: 55, name: "دکسي شيبر امريكانا", price: 105, category: "sauces", emoji: "🥣" },
+            { id: 56, name: "دکسي شيبر كلاسيك", price: 100, category: "sauces", emoji: "🥣" },
+            { id: 57, name: "دکسي صوص بافلو", price: 110, category: "sauces", emoji: "🔥" },
+            { id: 58, name: "دکسي كاتشب ظريف", price: 90, category: "sauces", emoji: "🍅" },
+            { id: 59, name: "دکسي مايونيز بالفلفل", price: 95, category: "sauces", emoji: "🌶️" },
+            { id: 60, name: "دکسي مايونيز كلاسيك", price: 90, category: "sauces", emoji: "🥣" },
+            { id: 61, name: "دکسي فلفل هالبينو", price: 85, category: "sauces", emoji: "🌶️" },
+            { id: 62, name: "رز زعيم اريل 25", price: 600, category: "spices", emoji: "🍚" },
+            { id: 63, name: "سسجل شرقي 5 ك", price: 550, category: "burgers", emoji: "🌭" },
+            { id: 64, name: "شيهر ميتكاتا 1 ك", price: 120, category: "burgers", emoji: "🥩" },
+            { id: 65, name: "شيفني باربيكو", price: 90, category: "sauces", emoji: "🍯" },
+            { id: 66, name: "شيفني بصل بودر", price: 85, category: "spices", emoji: "🧅" },
+            { id: 67, name: "شيفني ثوم بودر", price: 85, category: "spices", emoji: "🧄" },
+            { id: 68, name: "كاتشب بريميم 10ك", price: 320, category: "sauces", emoji: "🍅" },
+            { id: 69, name: "كاتشب زاد 10", price: 300, category: "sauces", emoji: "🍅" },
+            { id: 70, name: "قناده موزريلا استكس", price: 115, category: "cheese", emoji: "🧀" },
+            { id: 71, name: "مايونيز هايبر ساندويتش", price: 95, category: "sauces", emoji: "🥪" },
+            { id: 72, name: "مايونيز هايبر كلاسيك", price: 90, category: "sauces", emoji: "🥣" },
+            { id: 73, name: "ملح", price: 15, category: "spices", emoji: "🧂" }
         ];
 
-        // جلب المنتجات من التخزين المحلي أو استخدام الافتراضية
         let products = JSON.parse(localStorage.getItem('ali_products')) || defaultProducts;
         let cart = [];
         let currentCategory = 'all';
@@ -791,10 +852,9 @@
             itemsCountEl.innerText = `${cart.length} أنواع (${totalCount} قطعة)`;
         }
 
-        // دوال لوحة التحكم (Admin)
         function openAdminPanel() {
             let pass = prompt("أدخل كلمة مرور لوحة التحكم:");
-            if (pass === "1234") { // كلمة المرور الافتراضية
+            if (pass === "1234") {
                 document.getElementById('adminModal').style.display = 'flex';
                 renderAdminTable();
             } else if (pass !== null) {
@@ -813,7 +873,7 @@
             products.forEach(p => {
                 tbody.innerHTML += `
                     <tr>
-                        <td>${p.emoji} ${p.name}</td>
+                        <td>${p.emoji || '📦'} ${p.name}</td>
                         <td>${p.price} ج.م</td>
                         <td>${p.category}</td>
                         <td><button class="btn-danger" onclick="deleteProduct(${p.id})">حذف</button></td>
@@ -886,7 +946,7 @@
             message += `💰 *إجمالي الفاتورة التقديري:* *${total} ج.م*\n\n`;
             message += `_برجاء مراجعة الطلب وتأكيد الميعاد._`;
 
-            // ضع رقم الأستاذ علي الحقيقي هنا (مثال: 2010xxxxxxxx)
+            // ضع رقم الأستاذ علي الحقيقي هنا مسبوقاً برمز الدولة (مثال: 2010xxxxxxxx)
             const whatsappNumber = "201000000000";
 
             const encodedMessage = encodeURIComponent(message);
