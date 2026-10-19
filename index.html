@@ -531,7 +531,7 @@
                     <input type="text" id="search-input" placeholder="🔍 ابحث عن أي صنف في القائمة..." onkeyup="renderProducts()">
                 </div>
                 <div class="categories">
-                    <button class="cat-btn active" onclick="setCategory('all', this)">الكل</button>
+                    <button class="cat-btn active" onclick="setCategory('all', this)">الكل (73 صنف)</button>
                     <button class="cat-btn" onclick="setCategory('burgers', this)">🍔 استربس وبرجر</button>
                     <button class="cat-btn" onclick="setCategory('fries', this)">🍟 بطاطس</button>
                     <button class="cat-btn" onclick="setCategory('sauces', this)">🥫 صوصات ودريسينج</button>
@@ -637,7 +637,7 @@
     <div id="toast">تمت العملية بنجاح! ✨</div>
 
     <script>
-        // جميع الـ 73 صنف المستخرجة بالكامل من قائمة "الصفا للتوريدات"
+        // جميع الـ 73 صنف المستخرجة بالكامل من القائمة
         const defaultProducts = [
             { id: 1, name: "استابرس استدريس بارد", price: 130, category: "burgers", emoji: "🍗" },
             { id: 2, name: "استابرس استدريس حار", price: 135, category: "burgers", emoji: "🔥" },
@@ -714,7 +714,10 @@
             { id: 73, name: "ملح", price: 15, category: "spices", emoji: "🧂" }
         ];
 
-        let products = JSON.parse(localStorage.getItem('ali_products')) || defaultProducts;
+        // تحديث التخزين المحلي مباشرة لضمان ظهور الـ 73 صنف
+        localStorage.setItem('ali_products', JSON.stringify(defaultProducts));
+        let products = JSON.parse(localStorage.getItem('ali_products'));
+        
         let cart = [];
         let currentCategory = 'all';
 
