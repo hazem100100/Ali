@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر مجمدات الفاست فود - شركة علي</title>
+    <!-- استيراد خط أنيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #d32f2f, #ff9800);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #d32f2f;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-img {
+            height: 150px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .product-info {
+            padding: 15px;
+        }
+        .product-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        .product-price {
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        .add-to-cart-btn {
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #1b5e20;
+        }
+        /* سلة المشتريات */
+        .cart-section {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .cart-items {
+            list-style: none;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        .cart-item-remove {
+            color: #d32f2f;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.95rem;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .whatsapp-btn:hover {
+            background-color: #1ebe5d;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>شركة علي للمجمدات والفاست فود</h1>
+        <p>توريدات الجملة لأصحاب المطاعم ومحلات الفاست فود</p>
+    </header>
+
+    <div class="container">
+        <!-- قسم المنتجات -->
+        <div>
+            <h2 class="section-title">قائمة المنتجات</h2>
+            <div class="products-grid" id="products-grid">
+                <!-- المنتجات يتم إضافتها عبر الجافاسكريبت -->
+            </div>
+        </div>
+
+        <!-- قسم سلة المشتريات -->
+        <div class="cart-section">
+            <h2 class="section-title" style="font-size: 1.2rem;">سلة الطلبات</h2>
+            <ul class="cart-items" id="cart-items">
+                <li style="text-align: center; color: #888;">السلة فارغة حالياً</li>
+            </ul>
+            
+            <div class="cart-total">
+                <span>الإجمالي:</span>
+                <span id="total-price">0 ج.م</span>
+            </div>
+
+            <div class="form-group">
+                <label for="shop-name">اسم المحل / المطعم:</label>
+                <input type="text" id="shop-name" placeholder="اكتب اسم محلك هنا...">
+            </div>
+
+            <div class="form-group">
+                <label for="shop-phone">رقم الهاتف:</label>
+                <input type="text" id="shop-phone" placeholder="رقم الموبايل للتواصل...">
+            </div>
+
+            <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+                إرسال الطلب عبر واتساب 📱
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // قائمة المنتجات المقترحة للفاست فود
+        const products = [
+            { id: 1, name: "برجر بقري جامبو (قطعة)", price: 15, emoji: "🍔" },
+            { id: 2, name: "برجر دجاج كرسبي (قطعة)", price: 14, emoji: "🍗" },
+            { id: 3, name: "بطاطس نصف فروم (كيس 2.5 كجم)", price: 95, emoji: "🍟" },
+            { id: 4, name: "أصابع موزاريلا مجمدة (كيس)", price: 120, emoji: "🧀" },
+            { id: 5, name: "استربس دجاج حار (كيلو)", price: 140, emoji: "🔥" },
+            { id: 6, name: "ناجتس دجاج (كيلو)", price: 110, emoji: "🧊" }
+        ];
+
+        let cart = [];
+
+        // عرض المنتجات في الصفحة
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
+            products.forEach(product => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-img">${product.emoji}</div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">${product.price} ج.م</div>
+                            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">إضافة للسلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // إضافة منتج للسلة
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+
+            if (cartItem) {
+                cartItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        // حذف منتج من السلة
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // تحديث واجهة السلة
+        function updateCart() {
+            const cartList = document.getElementById('cart-items');
+            const totalPriceEl = document.getElementById('total-price');
+            
+            cartList.innerHTML = '';
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li style="text-align: center; color: #888;">السلة فارغة حالياً</li>';
+                totalPriceEl.innerText = '0 ج.م';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                cartList.innerHTML += `
+                    <li class="cart-item">
+                        <div class="cart-item-details">
+                            ${item.name} <br>
+                            <small>${item.quantity} × ${item.price} ج.م</small>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</button>
+                    </li>
+                `;
+            });
+
+            totalPriceEl.innerText = total + ' ج.م';
+        }
+
+        // إرسال الطلب عبر الواتساب
+        function sendToWhatsApp() {
+            const shopName = document.getElementById('shop-name').value.trim();
+            const shopPhone = document.getElementById('shop-phone').value.trim();
+
+            if (cart.length === 0) {
+                alert('السلة فارغة، يرجى إضافة منتجات أولاً!');
+                return;
+            }
+            if (!shopName) {
+                alert('يرجى كتابة اسم المحل أو المطعم!');
+                return;
+            }
+
+            // تجهيز نص رسالة الواتساب
+            let message = `*طلب جديد من موقع شركة علي للمجمدات* 📦\n\n`;
+            message += `🏪 *اسم المحل:* ${shopName}\n`;
+            if (shopPhone) message += `📞 *رقم الهاتف:* ${shopPhone}\n`;
+            message += `--------------------------\n`;
+            message += `*المنتجات المطلوبة:*\n`;
+
+            let total = 0;
+            cart.forEach(item => {
+                let itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                message += `▪️ ${item.name} | الكمية: ${item.quantity} | السعر: ${itemTotal} ج.م\n`;
+            });
+
+            message += `--------------------------\n`;
+            message += `💰 *الإجمالي الكلي:* *${total} ج.م*\n`;
+
+            // رقم واتساب شركة علي (استبدل الرقم ده برقم علي الحقيقي مسبوقاً بكود الدولة 20)
+            const whatsappNumber = "201000000000"; 
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        }
+
+        // تشغيل عرض المنتجات عند فتح الصفحة
+        renderProducts();
+    </script>
+</body>
+</html>
